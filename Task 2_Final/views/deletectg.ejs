@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/stylesheets/otros.css">
+    <title>THE MISTER</title>
+    <link rel="shortcut icon" href="/img/1Logo.png" type="image/x-icon">
+</head>
+<body>
+    <br><br><br><br><br>
+    <h3>¿Desea eliminar esta categoria?</h3>
+
+    <div>
+        <form action="/deletectg/<%= categorias.id %>" method="get"><br>
+            <h4  ><%= categorias.nombre %></h4>
+            <button type="submit" class="btn_btn-primary">Eliminar</button>
+        </form>
+    </div><br>
+
+    <a href="/categorias"><img src="/img/back.png" width="30" id="volverAtras"></a>
+
+    <style>
+        h4{
+            text-align: center;
+            color: white;
+            font-size: 20px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        h3{
+            text-align: center;
+            color: white;
+            font-size: 25px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+    </style>
+</body>
+</html>

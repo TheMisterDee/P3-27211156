@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/stylesheets/otros.css">
+    <title>THE MISTER</title>
+    <link rel="shortcut icon" href="/img/1Logo.png" type="image/x-icon">
+</head>
+<body><br><br>
+    <h1>Ingrese un producto</h1><br>
+    <style>
+        h1{
+            text-align: center;
+            color: white;
+            font-family: 'Times New Roman', Times, serif;
+        }
+    </style>
+    <div>
+        <form action="/aggprd" method="post">
+            <input class="formP" type="text" name="nombre" id="nombre" placeholder="Ingrese el nombre del producto" required maxlength="75" minlength="3"><br>
+            <input class="formP" type="number" name="codigo" id="codigo" placeholder="Ingrese el codigo del producto" required><br>
+            <input class="formP" type="number" name="precio" id="precio" placeholder="Ingrese el precio del producto" required><br>
+            <input class="formP" type="text" name="marca" id="marca" placeholder="Ingrese la marca del producto" required maxlength="25" minlength="4"><br>
+            <input class="formP" type="text" name="modelo" id="modelo" placeholder="Ingrese el modelo del producto" required><br>
+            <select class="formP" id="categoria_id" name="categoria_id">
+                <option value="" >Categoria</option>
+                <% if (categorias) { %>
+                    <% for (let i = 0; i < categorias.length; i++){  %>
+                        <% if (categorias) { %>
+                            <option value="<%= categorias[i].id %>" id="categoria_id" name="categoria_id"><%= categorias[i].nombre %></option>
+    
+                        <% } %>
+                    <% } %>
+                <% } else { %>
+                            <option value="">No existen categorias en el sistema</option>
+                    <% }   %>
+            </select><br>
+            <input class="formP" type="textarea" name="descripcion" id="descripcion" placeholder="Ingrese la descripcion del producto" maxlength="520" minlength="10"><br>
+            <button type="submit" class="btn_btn-primary">Añadir</button>
+        </form>
+    </div>
+    <a href="/productos"><img src="/img/back.png" width="30" id="boton"></a>
+    <style>
+        .formP{
+            justify-content: center;
+            text-align: center;
+            width: 40%;
+            background: #ffffff;
+            padding: 5px;
+            border-radius:10px 10px 10px 10px;
+            border: 1px solid #24303c;
+            margin-bottom: 8px;
+            font-family:'Times New Roman', Times, serif;
+            font-size: 16px;
+            color: rgb(0, 0, 0);
+            margin-left: 30%;
+        }
+        #boton{
+	        margin-left: 48%;
+            margin-top: 5%;
+        }
+    </style> 
+</body>
+</html>
