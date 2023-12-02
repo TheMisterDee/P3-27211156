@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/stylesheets/otros.css">
+    <title>THE MISTER</title>
+    <link rel="shortcut icon" href="/img/1Logo.png" type="image/x-icon">
+</head>
+<body><br><br>
+    <h1>Agregue una imagen</h1><br>
+    <style>
+        h1{
+            text-align: center;
+            color: white;
+            font-family: 'Times New Roman', Times, serif;
+        }
+    </style>
+    <div>
+        <form action="/aggimg" method="post">
+            <input class="formI" type="url" name="url" id="url" placeholder="Ingrese la url de la imagen" required maxlength="2500" minlength="3"><br>
+            <select class="formI" name="destacado" id="destacado">
+                <option value="">Destacado</option>
+                <option value="Si">SI</option>
+                <option value="No">NO</option>
+            </select><br>
+            <select class="formI" id="producto_id" name="producto_id">
+                <option value="" >Producto</option>
+                <% if (productos) { %>
+                    <% for (let i = 0; i < productos.length; i++){  %>
+                        <% if (productos) { %>
+                            <option value="<%= productos[i].id %>" id="producto_id" name="producto_id"><%= productos[i].nombre %></option> 
+                        <% } %>
+                    <% } %>
+                <% } else { %>
+                            <option value="">No existen productos en el sistema</option>
+                    <% }   %>
+            </select><br><br>
+            <button type="submit" class="btn_btn-primary">Agregar</button>
+        </form> 
+    </div>
+    <a href="/imagenes"><img src="/img/back.png" width="30" id="boton"></a>
+    <style>
+        .formI{
+            justify-content: center;
+            text-align: center;
+            width: 40%;
+            background: #ffffff;
+            padding: 5px;
+            border-radius:10px 10px 10px 10px;
+            border: 1px solid #24303c;
+            margin-bottom: 8px;
+            font-family:'Times New Roman', Times, serif;
+            font-size: 16px;
+            color: rgb(0, 0, 0);
+            margin-left: 30%;
+        }
+        #boton{
+	        margin-left: 48%;
+            margin-top: 5%;
+        }
+    </style>
+</body>
+</html>

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/stylesheets/admin.css">
+    <title>THE MISTER</title>
+    <link rel="shortcut icon" href="/img/1Logo.png" type="image/x-icon">
+    <style>
+        .oner{
+            display: flex;
+            text-decoration: none;
+            justify-content: center;
+            align-items: center;
+            list-style: none;
+        }
+    </style>
+    <style>
+        .catdes{
+            display: flexbox;
+            padding: 10px 10px 10px 10px;
+        }
+        .caja { 
+            font-family:'Times New Roman', Times, serif; 
+            color: #000000; 
+            font-size: 13px; 
+            font-weight: 300; 
+            text-align:center; 
+            background: rgb(134, 142, 163); 
+            margin: 0 0 25px; 
+            overflow: hidden; 
+            padding: 20px; 
+            border-radius: 35px 0px 35px 0px; 
+            -moz-border-radius: 35px 0px 35px 0px; 
+            -webkit-border-radius: 35px 0px 35px 0px; 
+            border: 2px solid #000000;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <img src="/img/Mister.png" alt="El logo de Mister" width="110px" height="90px">
+        </div>
+        <div class="nombre">
+            <h1>THE MISTER</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/"><img src="/img/apagar.png" width="30" id="boton"></a></li>
+            </ul>
+        </nav>
+    </header><br><br><br><br><br><br>
+
+    
+    <div class="oner">
+                        <li class="">
+                            <form action="/search" method="post">
+                                <input type="text" name="nombre" id="nombre" placeholder="Ingrese por nombre" >
+                                <button type="submit" class="btn_btn-primary">Buscar</button>
+                            </form>
+                        </li>
+                        <li class="">
+                            <form action="/searchdescrp" method="post">
+                                <input type="text" name="descripcion" id="descripcion" placeholder="Buscar por descripcion" >
+                                <button type="submit" class="btn_btn-primary">Buscar</button>
+                            </form>
+                        </li>
+                        <li class="nav-item">
+                            <form action="/filtroctg" method="post">
+                                <select name="categoria" id="categoria">
+                                  <option value="">Categorías</option>
+                                  <% if (datos && datos.length > 0) { %>
+                                    <% let categoriasUnicas = [...new Set(datos.map(item => item.categoriaNombre))] %>
+                                    <% for (let i = 0; i < categoriasUnicas.length; i++) { %>
+                                      <option value="<%= categoriasUnicas[i] %>"><%= categoriasUnicas[i] %></option>
+                                    <% } %>
+                                  <% } else { %>
+                                    <option value="">No existen sillas en el sistema</option>
+                                  <% } %>
+                                </select>
+                                <button type="submit" class="btn_btn-primary">Filtrar</button>
+                              </form>
+                        </li>
+                        <li>
+                            <form action="/filtromarca" method="post">
+                                <select name="marca" id="marca">
+                                  <option value="">Marcas</option>
+                                  <% if (datos && datos.length > 0) { %>
+                                    <% let marcasUnicas = [...new Set(datos.map(item => item.marca))] %>
+                                    <% for (let i = 0; i < marcasUnicas.length; i++) { %>
+                                      <option value="<%= marcasUnicas[i] %>"><%= marcasUnicas[i] %></option>
+                                    <% } %>
+                                  <% } else { %>
+                                    <option value="">No existen sillas en el sistema</option>
+                                  <% } %>
+                                </select>
+                                <button type="submit" class="btn_btn-primary">Filtrar</button>
+                              </form>
+                        </li>
+                        <li>
+                            <form action="/filtromdl" method="post">
+                                <select name="modelo" id="modelo">
+                                  <option value="">Modelo</option>
+                                  <% if (datos && datos.length > 0) { %>
+                                    <% let modelosUnicos = [...new Set(datos.map(item => item.modelo))] %>
+                                    <% for (let i = 0; i < modelosUnicos.length; i++) { %>
+                                      <option value="<%= modelosUnicos[i] %>"><%= modelosUnicos[i] %></option>
+                                    <% } %>
+                                  <% } else { %>
+                                    <option value="">No existen sillas en el sistema</option>
+                                  <% } %>
+                                </select>
+                                <button type="submit" class="btn_btn-primary">Filtrar</button>
+                              </form>
+
+                        </li>
+    </div>                
+   <br>
+   <div style="text-align: center;">
+        <a style="color: #ffffff;" href="/clientes">Filtrar otros productos</a><br>
+   </div>
+<br><br>
+
+
+
+<div style="text-align: center; color:white; font-family:'Times New Roman', Times, serif; font-size: 25px;">
+    <p>BIENVENIDOS A THE MISTER</p>
+</div>
+<div style="text-align: center; color:white; font-family:'Times New Roman', Times, serif; font-size: 15px;">
+    <p>Tu sitio de confianza en cuanto a sillas</p>
+</div><br><br>
+
+
+
+<div class='btn-group' role='group' aria-label='Vista de productos'>
+    <button id="btnCuadricula" onclick="activarVista('cuadricula')">Cuadrícula</button>
+    <button id="btnLista" onclick="activarVista('lista')">Lista</button>
+    
+</div>
+<div id="vistaCuadricula" class="card-body justify-content-center">
+
+<div class="card-body justify-content-center">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        <table border="2">
+            <tr class="col custom-col">
+                <% if (datos) { %>
+                    <% for (let i=0; i < datos.length; i++){ %>
+                        <tr class="col custom-col">
+                            <div class="catdes">
+                                <div class="col custom-col">
+                                    <div class="caja">
+                                        <img src="<%= datos[i].url %>" width="200px" height="125px" alt="Foto del producto">
+                                        <div class="card-body">
+                                            <h4 class="card-title"><%= datos[i].productoNombre %></h4>
+                                            <p class="card-text"><%= datos[i].descripcion %></p><br>
+                                            <h5 style="color: rgb(255, 255, 255)">Modelo</h5>
+                                            <p class="card-text"><%= datos[i].modelo %></p>
+                                            <br>
+                                            <h5 style="color: rgb(255, 255, 255)">Categoria</h5>
+                                            <p class="card-text"><%= datos[i].categoriaNombre %></p>
+                                            <br>
+                                            <h5 style="color: rgb(255, 255, 255)">Marca</h5>
+                                            <p class="card-text"><%= datos[i].marca %></p>
+                                            <br>
+                                            <h5 style="color: rgb(255, 255, 255)">Precio</h5>
+                                            <p class="card-body"><%= datos[i].precio %>€</p><br>
+                                            <div style="display: flex; justify-content: center; align-items: center;">
+                                                <div>
+                                                    <a href=""><img src="/img/detalles.png" alt="detalles" width="30px" height="30px"></a>
+                                                </div>
+                                                <div>
+                                                    <a href=""><img src="/img/carrito.png" alt="carrito" width="30px" height="30px"></a>
+                                                </div>
+                                                <div>
+                                                    <a href=""><img src="/img/buy.png" alt="comprar" width="30px" height="30px"></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </tr>
+                    <% } %>
+                <% } %>
+            </tr>
+        </table>
+    </div>
+</div>
+</div>
+<br>
+<div id="vistaLista" class="card-body justify-content-center" style="display: none;">
+    <div>
+        <table border="2">
+           
+            <tr>
+                <th><p>Nombre</p></th>
+                <th><p>Precio</p></th>
+                <th><p>Marca</p></th>
+                <th><p>Modelo</p></th>
+                <th><p>Descripcion</p></th>
+                <th><p>Categoria</p></th>
+                <th><p>Imagen</p></th>
+                <th><p>Accion</p></th>
+            </tr>
+            <tr>
+               <% if (datos) { %>
+                    <% for (let i = 0; i < datos.length; i++){  %>
+                            <tr>
+                                <td><%= datos[i].productoNombre %></td>
+                                <td><%= datos[i].precio %>€</td>
+                                <td><%= datos[i].marca %></td>
+                                <td><%= datos[i].modelo %></td>
+                                <td><%= datos[i].descripcion %></td>
+                                <td><%= datos[i].categoriaNombre %></td>
+                                <td><img width="300px" height="300px" class="imagen-producto" src="<%= datos[i].url %>"></td>
+                                <td><a target="_blank" href="https://youtube.com/playlist?list=PLnFuxndZgZsSavNSK25ePK1Cqttf7eZNT&si=dK5VcEoavNDBRNXD" class="btn_btn-info"><img src="/img/buy.png" width="30" id="volverAtras"></a></td>
+                            </tr>    
+                    <% } %>
+                <% } else { %>
+                        <tr>
+                            <th><p>No hay productos en el sistema</p></th>
+                        </tr>
+                    <% }   %>
+            </tr>
+        </table>
+    </div>
+
+   
+</div>
+
+<script>
+    window.addEventListener('DOMContentLoaded', function() {
+    var modoVista = localStorage.getItem('modoVista');
+    if (modoVista === 'cuadricula') {
+        activarVista('cuadricula');
+    } else if (modoVista === 'lista') {
+        activarVista('lista');
+    }
+});
+
+function activarVista(vista) {
+    if (vista === 'cuadricula') {
+        document.getElementById('vistaCuadricula').style.display = 'block';
+        document.getElementById('vistaLista').style.display = 'none';
+    } else if (vista === 'lista') {
+        document.getElementById('vistaCuadricula').style.display = 'none';
+        document.getElementById('vistaLista').style.display = 'block';
+    }
+
+    // Guardar el modo de vista seleccionado en localStorage
+    localStorage.setItem('modoVista', vista);
+}
+</script>
+</body>
+</html>

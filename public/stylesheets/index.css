@@ -1,0 +1,98 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color:#191c32;
+}
+
+.form-registro h4{
+    font-size: 22px;
+    margin-bottom: 20px;
+}
+
+.form-register{
+    width: 400px;
+    background: #828e9b;
+    padding: 30px;
+    margin: auto;
+    margin-top: 100px;
+    border-radius: 4px;
+    font-family:'Courier New', Courier, monospace;
+    color: white;
+    border-radius:20px 20px 20px 20px;
+    box-shadow: 7px 13px 37px #000;
+}
+.control{
+    width: 100%;
+    background: #ffffff;
+    padding: 10px;
+    border-radius:10px 10px 10px 10px;
+    border: 1px solid #24303c;
+    margin-bottom: 16px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 16px;
+    color: rgb(0, 0, 0);
+}
+.texto{
+    width: 20%;
+    background: #828e9b;
+    color: #000;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 16px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 20px;
+    text-align: center;
+}
+
+.botons {
+    width: 15%;
+    background: #828e9b;
+    border: none;
+    padding: 3px;
+    color: rgb(0, 0, 0);
+    margin-left: 43%;
+    margin-top: 15px;
+    font-size: 15px;
+    border-radius:5px 5px 5px 5px;
+	cursor: pointer;
+
+}
+
+a{
+    text-decoration: none;
+}
+
+@media screen and (min-width: 768px) {
+    .body{
+        flex-wrap: nowrap;
+    }
+    .header{
+        position: fixed;
+    }
+}
+
+@media screen and (width<600px) {
+    .body{
+        flex-wrap: nowrap;
+    }
+    .header{
+        position: fixed;
+    }
+}
+
+header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    background-color: black;
+    padding-left: 5px;
+    height: 90px;
+    width: 100%;
+
+    flex-wrap: wrap;
+}
