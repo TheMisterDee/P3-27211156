@@ -48,6 +48,7 @@
         </div>
         <nav>
             <ul>
+                <li><a href="/loginclientes" class="text-white">Como Usuario</a></li>
                 <li><a href="/"><img src="/img/apagar.png" width="30" id="boton"></a></li>
             </ul>
         </nav>
@@ -153,29 +154,17 @@
                                     <div class="caja">
                                         <img src="<%= datos[i].url %>" width="200px" height="125px" alt="Foto del producto">
                                         <div class="card-body">
+
                                             <h4 class="card-title"><%= datos[i].productoNombre %></h4>
-                                            <p class="card-text"><%= datos[i].descripcion %></p><br>
-                                            <h5 style="color: rgb(255, 255, 255)">Modelo</h5>
-                                            <p class="card-text"><%= datos[i].modelo %></p>
-                                            <br>
-                                            <h5 style="color: rgb(255, 255, 255)">Categoria</h5>
-                                            <p class="card-text"><%= datos[i].categoriaNombre %></p>
-                                            <br>
-                                            <h5 style="color: rgb(255, 255, 255)">Marca</h5>
-                                            <p class="card-text"><%= datos[i].marca %></p>
-                                            <br>
                                             <h5 style="color: rgb(255, 255, 255)">Precio</h5>
                                             <p class="card-body"><%= datos[i].precio %>€</p><br>
+
                                             <div style="display: flex; justify-content: center; align-items: center;">
                                                 <div>
-                                                    <a href=""><img src="/img/detalles.png" alt="detalles" width="30px" height="30px"></a>
+                                                    <a href="detallesprd/<%= datos[i].id %>"><img src="/img/detalles.png" width="30px" height="30px"></a>
                                                 </div>
-                                                <div>
-                                                    <a href=""><img src="/img/carrito.png" alt="carrito" width="30px" height="30px"></a>
-                                                </div>
-                                                <div>
-                                                    <a href=""><img src="/img/buy.png" alt="comprar" width="30px" height="30px"></a>
-                                                </div>
+
+                                               
                                             </div>
                                         </div>
                                     </div>
