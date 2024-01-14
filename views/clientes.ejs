@@ -48,8 +48,8 @@
         </div>
         <nav>
             <ul>
-                <li><a href="/loginclientes" class="text-white">Como Usuario</a></li>
-                <li><a href="/"><img src="/img/apagar.png" width="30" id="boton"></a></li>
+                <li><a href="/loginclientes" class="text-white"><img src="/img/usuario.png" width="30" id="boton2"></a></li>
+                <li><a href="/logout"><img src="/img/apagar.png" width="30" id="boton"></a></li>
             </ul>
         </nav>
     </header><br><br><br><br><br><br>
@@ -58,14 +58,14 @@
     <div class="oner">
                         <li class="">
                             <form action="/search" method="post">
-                                <input type="text" name="nombre" id="nombre" placeholder="Ingrese por nombre" >
-                                <button type="submit" class="btn_btn-primary">Buscar</button>
+                                <input type="text" name="nombre" id="nombre" placeholder="Buscar por nombre" >
+                                <button type="submit" class="btn_btn-primary"><img src="/img/lupa.png" width="12px"></button>
                             </form>
                         </li>
                         <li class="">
                             <form action="/searchdescrp" method="post">
                                 <input type="text" name="descripcion" id="descripcion" placeholder="Buscar por descripcion" >
-                                <button type="submit" class="btn_btn-primary">Buscar</button>
+                                <button type="submit" class="btn_btn-primary"><img src="/img/lupa.png" width="12px"></button>
                             </form>
                         </li>
                         <li class="nav-item">
@@ -81,7 +81,7 @@
                                     <option value="">No existen sillas en el sistema</option>
                                   <% } %>
                                 </select>
-                                <button type="submit" class="btn_btn-primary">Filtrar</button>
+                                <button type="submit" class="btn_btn-primary"><img src="/img/filtrar.png" width="12px"></button>
                               </form>
                         </li>
                         <li>
@@ -97,7 +97,7 @@
                                     <option value="">No existen sillas en el sistema</option>
                                   <% } %>
                                 </select>
-                                <button type="submit" class="btn_btn-primary">Filtrar</button>
+                                <button type="submit" class="btn_btn-primary"><img src="/img/filtrar.png" width="12px"></button>
                               </form>
                         </li>
                         <li>
@@ -113,7 +113,7 @@
                                     <option value="">No existen sillas en el sistema</option>
                                   <% } %>
                                 </select>
-                                <button type="submit" class="btn_btn-primary">Filtrar</button>
+                                <button type="submit" class="btn_btn-primary"><img src="/img/filtrar.png" width="12px"></button>
                               </form>
 
                         </li>
@@ -135,10 +135,9 @@
 
 
 
-<div class='btn-group' role='group' aria-label='Vista de productos'>
-    <button id="btnCuadricula" onclick="activarVista('cuadricula')">Cuadrícula</button>
-    <button id="btnLista" onclick="activarVista('lista')">Lista</button>
-    
+<div class='btn-group' role='group' aria-label='Vista de productos' style="text-align: center;">
+    <button id="btnCuadricula" onclick="activarVista('cuadricula')"><img src="/img/cuadricula.png" width="40px"></button>
+    <button id="btnLista" onclick="activarVista('lista')"><img src="/img/lista.png" width="40px"></button>
 </div>
 <div id="vistaCuadricula" class="card-body justify-content-center">
 
@@ -152,7 +151,7 @@
                             <div class="catdes">
                                 <div class="col custom-col">
                                     <div class="caja">
-                                        <img src="<%= datos[i].url %>" width="200px" height="125px" alt="Foto del producto">
+                                        <img src="<%= datos[i].url %>" width="200px" height="200px" alt="Foto del producto">
                                         <div class="card-body">
 
                                             <h4 class="card-title"><%= datos[i].productoNombre %></h4>
@@ -186,12 +185,9 @@
             <tr>
                 <th><p>Nombre</p></th>
                 <th><p>Precio</p></th>
-                <th><p>Marca</p></th>
-                <th><p>Modelo</p></th>
-                <th><p>Descripcion</p></th>
-                <th><p>Categoria</p></th>
+               
                 <th><p>Imagen</p></th>
-                <th><p>Accion</p></th>
+                <th><p>Detalles</p></th>
             </tr>
             <tr>
                <% if (datos) { %>
@@ -199,12 +195,9 @@
                             <tr>
                                 <td><%= datos[i].productoNombre %></td>
                                 <td><%= datos[i].precio %>€</td>
-                                <td><%= datos[i].marca %></td>
-                                <td><%= datos[i].modelo %></td>
-                                <td><%= datos[i].descripcion %></td>
-                                <td><%= datos[i].categoriaNombre %></td>
+                                
                                 <td><img width="300px" height="300px" class="imagen-producto" src="<%= datos[i].url %>"></td>
-                                <td><a target="_blank" href="https://youtube.com/playlist?list=PLnFuxndZgZsSavNSK25ePK1Cqttf7eZNT&si=dK5VcEoavNDBRNXD" class="btn_btn-info"><img src="/img/buy.png" width="30" id="volverAtras"></a></td>
+                                <td><a href="detallesprd/<%= datos[i].id %>"><img src="/img/detalles.png" width="30px" height="30px"></a></td>
                             </tr>    
                     <% } %>
                 <% } else { %>

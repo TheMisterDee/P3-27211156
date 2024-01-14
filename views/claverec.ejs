@@ -1,24 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fallo de Sesion</title>
-   
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">   
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    
-
+    <title>THE MISTER</title>
+    <link rel="shortcut icon" href="/img/1Logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="/stylesheets/admin.css">
+    <style>
+        h3{
+            text-align: center;
+            color: white;
+        };
     </style>
 </head>
-<body>
+<body><br><br><br>
     <div class="container">
-    <h1>Su Contraseña es:</h1>
-    <p><%= datos.password %></p>
+        <h1>Su Contraseña es:</h1>
+        <h3><%= datos.password %></h3><br>
 
-    <a type="button" class="btn btn-dark" href="/loginclientes">Volver a intentar</a>
+        <a style="margin-left: 48%; margin-top: 10%;" href="/loginclientes"><img src="/img/back.png" width="30" id="boton"></a>
     </div>
-
-
 </body>
 </html>

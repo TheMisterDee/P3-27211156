@@ -1,72 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mister</title>
     <link rel="stylesheet" href="/stylesheets/admin.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" href="/stylesheets/hf.css">
-
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Roboto:wght@400;700&family=Saira+Stencil+One&display=swap"
         rel="stylesheet">
-
-
-    <style>
-       
-        .return-button {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 10px 20px;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-        li.nav-item{
-            color: white;
-        }
-
-    </style>
-</head>
-
 <body>
     <header>
-        <li class="nav-item">
-                                        <a class="nav-link btn btn-dark" href="/">Home</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link  btn btn-dark" aria-current="page"
-                                            href="/categorias">Categorias</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link btn btn-dark" href="/productos">Productos</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link btn btn-dark" href="/imagenes">Imagenes</a>
-                                    </li>
-                                 
-                                    <li class="nav-item">
-                                        <a class="nav-link btn btn-dark" href="/tablacompras">Facturas</a>
-                                    </li>
-                                    <a class="nav-link return-button" href="/logout">Salir</a>
-                                </ul>
-            </header>
+        <div class="logo">
+            <a href="/home"><img src="/img/Mister.png" alt="El logo de Mister" width="110px" height="90px"></a>
+        </div>
+        <div class="nombre">
+            <h1>THE MISTER</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/home">Inicio</a></li>
+                <li><a href="/categorias">Categorias</a></li>
+                <li><a href="/productos">Productos</a></li>
+                <li><a href="/imagenes">Imagenes</a></li>
+                <li><a href="/tablacompras">Facturas</a></li>
+            </ul>
+        </nav>
+    </header><br><br><br><br><br><br>
 
-
-        <main class="separe">
-            <article class="container1">
-                <div class="container">
-                    <div class="table-responsive">
-                       <br><br>
-                        <table border="2px" class="table">
+                    <div>
+                        <h1>Listado de clientes registrados</h1><br>
+                        <table border="1px">
                        
                             <tr>
                                 <th>
@@ -116,10 +83,6 @@
                                             </tr>
                         </table>
                     </div>
-                </div>
-
-            </article>
-        </main>
     
 
         <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>

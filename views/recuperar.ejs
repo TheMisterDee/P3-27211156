@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recuperar Contraseña</title>
+    <title>THE MISTER</title>
     <Style>
             @import url('https://fonts.googleapis.com/css?family=Muli&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,500&display=swap');
@@ -13,7 +13,7 @@
 }
 
 body {
-	background-color: #8eaeeb;
+	background-color: #24303c;
 	font-family: 'Open Sans', sans-serif;
 	display: flex;
 	align-items: center;
@@ -33,7 +33,7 @@ body {
 
 .header {
 	border-bottom: 1px solid #f0f0f0;
-	background-color: #ccd8ef;
+	background-color: rgb(134, 142, 163);
 	padding: 20px 40px;
 }
 
@@ -182,9 +182,9 @@ button:hover {
 
 
 	<form  action="/resclave" method="post" class="form">
-    <input type="text" name="pregunta" id="pregunta" placeholder="Ingrese su pregunta de seguridad" required maxlength="16" minlength="4" >
-	<input type="text" name="respuesta" id="respuesta" placeholder="Ingrese su respuesta de seguridad" required maxlength="8" minlength="4">
-		<button type="submit" class="btn btn-primary">Buscar Correo</button>
+    <input type="text" name="pregunta" id="pregunta" placeholder="Pregunta de seguridad" required maxlength="30" minlength="4" >
+	<input type="text" name="respuesta" id="respuesta" placeholder="Respuesta de seguridad" required maxlength="30" minlength="4">
+		<button type="submit" class="btn btn-primary">Recuperar</button>
 	</form>
 </div>
 

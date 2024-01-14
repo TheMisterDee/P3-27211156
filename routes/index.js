@@ -303,9 +303,14 @@ router.post('/login', function(req, res, next){
   }
 });
 router.get('/logout', (req, res) => {
-  req.session.destroy();
+  if (req.session.active) {
+    req.session.destroy();
     res.redirect('/index');
- });
+  } else {
+    req.session.destroy();
+    res.redirect('/');
+  }
+});
 //Get principal page
 router.get('/home', function(req, res, next){
   if (req.session.active){
@@ -703,10 +708,6 @@ router.get('/tablaclientes', function(req, res, next){
 });
 
 //Cerrar sesion
-router.get('/logout', function (req, res, next){
-  req.session.destroy();
-  res.redirect('/');
-})
 
 router.get('/*', function(req, res, next) {
   res.render('error', { title: 'Error 404'});
