@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE MISTER</title>
+    <link rel="shortcut icon" href="/img/1Logo.png" type="image/x-icon">
+
+    <link rel="stylesheet" href="/stylesheets/admin.css">
+    
+    <style>
+        body {
+            background-color: #161737;
+        }
+
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <img src="/img/Mister.png" alt="El logo de Mister" width="110px" height="90px">
+        </div>
+        <div class="nombre">
+            <h1>THE MISTER</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/clientes"><img src="/img/back.png" width="30" id="boton"></a></li>
+            </ul>
+        </nav>
+    </header><br><br><br><br><br><br>
+
+    <main class="separe">
+        <article class="container1">
+            <div class="container">
+                <div class="table-responsive">
+                    <div class="titulo">
+                        <h1>Compras Realizadas</h1>
+                    </div>
+                    <table border="2" class="table table-hover table-dark table-striped">
+                        <!-- <caption><h1>Reporte General</h1></caption> -->
+                        <tr>
+                            <th>
+                                <p>N°</p>
+                            </th>
+                            <th>
+                                <p>Imagen</p>
+                            </th>
+                            <th>
+                                <p>Producto</p>
+                            </th>
+                            <th>
+                                <p>Cantidad</p>
+                            </th>
+                            <th>
+                                <p>Total Pagado</p>
+                            </th>
+                            <th>
+                                <p>Moneda</p>
+                            </th>
+                            <th>
+                                <p>Fecha</p>
+                            </th>
+                            <th>
+                                <p>Calificación</p>
+                            </th>
+                        </tr>
+                        <tr>
+                            <% if (datos) { %>
+                                <% for (let i=0; i < datos.length; i++){ %>
+                        <tr>
+                            <td>
+                                <%= (i + 1) %>
+                            </td>
+                            <td>
+                                <img class="imagen-producto" src="<%= datos[i].url %>" width="300px" height="300px">
+                            </td>
+                            <td>
+                                <%= datos[i].nombre %>
+                            </td>
+                            <td>
+                                <%= datos[i].cantidad %>
+                            </td>
+                            <td>
+                                <%= datos[i].total_pagado %>
+                            </td>
+                            <td>
+                                <%= datos[i].nomenclatura %>
+                            </td>
+                            <td>
+                                <%= datos[i].fecha %>
+                            </td>
+                            <td>
+                                <a href="/calificar/<%= datos[i].id %>" type="button" class="btn_btn-dark"><img src="/img/calificar.png" width="60px"></a>
+                            </td>
+                        </tr>
+                        <% } %>
+                            <% } else { %>
+                                <tr>
+                                    <th>
+                                        <p>Sin compras realizadas</p>
+                                    </th>
+                                </tr>
+                                <% } %>
+                                    </tr>
+                    </table>
+                </div>
+            </div>
+        </article>
+    </main>
+</body>
+
+</html>

@@ -16,11 +16,19 @@
     </style>
 </head>
 <body><br><br><br>
-    <div class="container">
-        <h1>Su Contraseña es:</h1>
-        <h3><%= datos.password %></h3><br>
-
-        <a style="margin-left: 48%; margin-top: 10%;" href="/loginclientes"><img src="/img/back.png" width="30" id="boton"></a>
+        <h2>Restablecer Contraseña</h2>
+    <hr>
+    <form action="/updateclave/<%= datos[0].id %>" method="post">
+        <h4 for="password">Ingrese su nueva contraseña</h4>
+        <input type="password" name="password1" id="password1" maxlength="20" minlength="6"
+            placeholder="Ingrese su contraseña" required>
+        <hr>
+        <h4 for="password2">Confirme su nueva contraseña</h4>
+        <input type="password" name="password2" id="password2" maxlength="20" minlength="6"
+            placeholder="Confirme su contraseña" required>
+        <hr>
+    <div style="margin-top: 20px; margin-bottom: 20px;"><button type="submit" class="btn_btn-primary">Restablecer</button></div>
+    </form>
     </div>
 </body>
 </html>

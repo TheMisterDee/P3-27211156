@@ -11,7 +11,9 @@
 </head>
 
 <body>
-
+<% if(mensaje) {%>
+    <p> <%= mensaje%></p>
+    <%}%>
 
     <form class="container" name="formulario" action="/login2" method="post">
         <table class="form-register">

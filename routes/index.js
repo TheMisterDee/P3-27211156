@@ -2,17 +2,20 @@ require ('dotenv').config();
 var express = require('express');
 var router = express.Router();
 var axios = require ('axios');
-const session = require('express-session');
+const nodemailer = require('nodemailer');
 
 const productosModel = require ('../models/admin')
 const { Axios } = require('axios');
 
 
-router.use(session({
-  secret: 'secretkeys',
-  resave: false,
-  saveUninitialized: false
-}));
+
+//Tranporte correo
+const transporter = nodemailer.createTransport({ 
+  service: 'gmail', 
+  auth: { 
+    user: process.env.correo, 
+    pass: process.env.clave_correo
+  } });
 
 //Get principal page
 router.get('/clientes', function(req, res, next){
@@ -32,8 +35,9 @@ router.get('/clientes', function(req, res, next){
 router.get('/loginclientes', function(req, res, next){
   if (req.session.auth){
     res.redirect('/clientes');
-  } else {
-  res.render('loginclientes', {title: 'Login Clientes'})}
+  } else if (req.session.active) { 
+    res.redirect('/admin'); } else { 
+  res.render('loginclientes', {title: 'Login Clientes' , mensaje:null});}
 });
 
 //logeo de inicio de sesion cliente
@@ -49,6 +53,7 @@ router.post('/login2', function(req, res, next){
     if (password == concat){
       req.session.auth = true;
       req.session.username = concat2;
+      req.session.email = email;
       res.redirect('/clientes');
     }else{
       res.send('esto no funciona')
@@ -62,7 +67,11 @@ router.post('/login2', function(req, res, next){
 
 //Pagina registros clientes
 router.get('/register-pag', function(req, res, next){
-  res.render('registerclientes', {title: 'Registro Clientes'})
+  if (req.session.auth){
+    res.redirect('/clientes');
+  } else if (req.session.active) { 
+    res.redirect('/admin'); } else {
+  res.render('registerclientes', {title: 'Registro Clientes'})}
 });
 
 //Registro de clientes
@@ -74,8 +83,23 @@ router.post('/register', function(req, res, next){
   productosModel
     .registroclientes(email, password1, preg_seg, resp_seg)
     .then(idClienteRegistrado=>{
-      res.redirect('/clientes')
-    })
+      const mailOptions = { 
+        from: 'themisterdee13@gmail.com', 
+        to: email, 
+        subject: `Bienaventurados los que se sienten en una de nuestras sillas`, 
+        text: `\n
+        Bienvenido\n 
+        Esto es THE MISTER\n
+        Tu registro se ha completado con exito.\n
+        Si buscas algo en THE MISTER, ¡Lo encontrarás!.`
+    }
+    transporter.sendMail(mailOptions, function(error, info){ 
+      if (error) { console.log(error); 
+      } else { 
+        console.log('Correo de Bienvenida enviado: ' + info.response); 
+      }});
+  res.redirect('/loginclientes');
+  })
     .catch(err=>{
       console.error(err.message);
       return res.status(500).send('Error en el registro')
@@ -84,29 +108,109 @@ router.post('/register', function(req, res, next){
 
 //Pagina error en contraseñas
 router.get('/passwordfail', function(req, res, next){
-  res.render('clavefail', {title: 'Contraseñas incorrectas'})
+   if (req.session.auth){
+    res.redirect('/clientes');
+  } else if (req.session.active) { 
+    res.redirect('/admin'); } else {
+  res.render('clavefail', {title: 'Contraseñas incorrectas'})}
 })
 
 //Pagina recuperar contraseña
 router.get('/recuperar', function(req, res, next){
-  res.render('recuperar', {title: 'Recuperar Contraseña'})
+  if (req.session.auth){
+    res.redirect('/clientes');
+  } else if (req.session.active) { 
+    res.redirect('/admin'); } else {
+  res.render('recuperar', {title: 'Recuperar Contraseña'})}
 });
+
+
+
 
 
 //Responder pregunta de Seguridad
 router.post('/resclave', function(req, res, next){
-  const {pregunta, respuesta} = req.body;
+  const {correo} = req.body;
   productosModel
-    .recuperarclave(pregunta, respuesta)
+    .recuperarclave(correo)
     .then(datos=>{
-      res.render('claverec', {datos: datos});
+      const mailOptions = { 
+        from: `themisterdee13@gmail.com`, 
+        to: datos[0].email, 
+        subject: `Restablecer Contraseña`, 
+        text: `\n
+        Se solicitó el reestablecimiento de su contraseña.\n
+        Haga clic en el enlace enviado para continuar: ${process.env.base_url}/rest-clave/${datos[0].id}\n\n
+        Si no fue usted, ignore este mensaje`
+      };
+
+      transporter.sendMail(mailOptions, function(error, info){ 
+        if (error) { console.log(error); 
+        } else { 
+          console.log('Se envió el correo electrónico de recuperacion de contraseña: ' + info.response); 
+      }});
+      res.send('Revise su correo para recuperar su contraseña')
     })
     .catch(err=>{
       console.error(err.message);
-      return res.status(500).send('Pregunta y respuesta no coincidente')
+      return res.status(500).send('correo invalido')
     })
 });
 
+
+//Pagina restablecer contraseña
+router.get('/rest-clave/:id', function(req, res, next){
+  if (req.session.auth){
+    res.redirect('/clientes');
+  } else if (req.session.active) { 
+    res.redirect('/admin'); } else {
+    const id= req.params.id;
+    productosModel
+    .obtenerIdcliente(id)
+    .then(datos=>{
+      res.render('claverec', {datos: datos})
+    })
+    .catch(err=>{
+      console.error(err.message);
+      return res.status(500).send('No se encuentra ese cliente')
+    })
+  }
+});
+
+//Restablecer Contraseña
+router.post('/updateclave/:id', function(req, res){
+  const cliente_id= req.params.id;
+  console.log(cliente_id);
+  const {password1, password2} = req.body;
+  if (password1 !== password2){
+    res.redirect('/passwordfail');
+  } else{
+    productosModel
+    .restablecerclave(password1, cliente_id)
+    .then(()=>{
+        res.render('loginclientes', {mensaje:"Su contraseña fue cambiada exitosamente."});
+      })
+    .catch(err=>{
+      console.error(err.message);
+      return res.status(500).send('Error restableciendo su contraseña')
+    })
+  }
+});
+
+
+
+//Pagina principal compras
+router.get('/clientes', function(req, res, next){
+  productosModel
+  .obteneradmin()
+  .then(datos=>{
+    res.render('clientes', {datos: datos});
+  }) 
+  .catch(err=>{
+    console.error(err.message);
+    return res.status(500).send('Error cargando archivos')
+  })
+});
 
 //Pagina detalles productos
 router.get('/detallesprd/:id', function(req, res, next){
@@ -146,6 +250,7 @@ router.post('/payments', async (req, res, next)=>{
   const {producto_id, descripcion, nombre, numero_tarjeta, cvv, mes_ven, year_ven, moneda_id, cantidad, referencia, precio} = req.body;
   const ip_cliente = req.socket.remoteAddress;
   const cliente_id = req.session.username;
+  const email = req.session.email;
   if (moneda_id == 1) {
     moneda= 'USD';
     monto = cantidad * precio;
@@ -184,12 +289,98 @@ router.post('/payments', async (req, res, next)=>{
       productosModel
       .facturas(cantidad, total_pagado, fecha, ip_cliente, transaccion_id, descripcion, referencia, moneda_id, cliente_id, producto_id)
       .then(idFacturaRealizada =>{
+        const mailOptions = {
+          from: process.env.email,
+          to: email,
+          subject: "Su transacción ha sido un exito",
+          text: `\n
+          ¡Enhorabuena!\n
+          Su compra ha sido un exito\n
+          Gracias por elegirnos.`
+        };
+
+        transporter.sendMail(mailOptions, function(error, info){
+          if(error){
+            console.log(error);
+          }
+          else{
+            console.log("Se le envió un correo electrónico de confirmación para su compra: "+info.response);
+          }});
         res.render('pagosuccess', {title: 'Compra Exitosa'})
       })
   } catch (err) {
     res.render('pagofails');
   }
 })
+
+
+
+
+//Pagina de Productos comprados por Cliente para su calificacion
+router.get('/productos-comprados', function(req, res, next){
+  if (req.session.auth) {
+    const cliente_id = req.session.username;
+    console.log(cliente_id);
+    productosModel
+    .obtenercomprasPorCliente(cliente_id)
+    .then(datos=>{
+      res.render('prdcomprados', {datos: datos});
+    })
+    .catch(err=>{
+      console.error(err.message);
+      return res.status(500).send('Error buscando archivos')
+    })
+  } else{
+    res.redirect('/loginclientes');
+  }
+})
+
+//Pagina para calificar un producto
+router.get('/calificar/:id', function(req, res, next){
+  if (req.session.auth){
+    const id = req.params.id;
+    productosModel
+    .obtenerprdconimgPorId(id)
+    .then(producto=>{
+      res.render('calificaciones', {producto:producto})
+    })
+    .catch(err=>{
+      console.error(err.message);
+      return res.status(500).send('Error buscando productos')
+    })
+  }else{
+    res.redirect('/loginclientes');
+  }
+});
+
+//Califar producto
+router.post('/calificacion', function(req, res, next){
+  const {producto_id, puntos}= req.body;
+  const cliente_id = req.session.username;
+  productosModel
+  .calificarprd(puntos, cliente_id, producto_id)
+  .then(idProductoCalificado=>{
+    res.render('calificacionsuccess');
+  })
+  .catch(err=>{
+    console.error(err.message);
+    return res.status(500).send('Error calificando productos')
+  })
+});
+
+//Filtrado por promedio de calificacion
+router.post('/filtroprm', function(req, res, next){
+  const {promedio} = req.body;
+  productosModel
+  .filtradoprm(promedio)
+  .then(datos=>{
+    res.render('clientes', {datos: datos});
+  })
+  .catch(err=>{
+    console.error(err.message);
+    return res.status(500).send('Error buscando archivos')
+  })
+});
 
 
 
@@ -277,7 +468,7 @@ router.post('/filtromdl', function(req, res, next){
 /* GET home page. */
 router.get('/index', function(req, res, next) {
   if (req.session.active) {
-res.redirect('home');
+res.redirect('/home');
   } else {
     res.render('index', { title: 'Login' });
   }
